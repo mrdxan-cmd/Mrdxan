@@ -1,0 +1,152 @@
+@import "tailwindcss";
+
+/*
+  Design tokens for the Maler Phönix website.
+  Dark, warm "phoenix" hero palette + clean light content sections.
+*/
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-outfit), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* Brand */
+  --color-ember-50: #fff4ec;
+  --color-ember-100: #ffe4d1;
+  --color-ember-200: #ffc7a3;
+  --color-ember-300: #ffa06a;
+  --color-ember-400: #ff7a33;
+  --color-ember-500: #f45f14;
+  --color-ember-600: #d9470a;
+  --color-ember-700: #b0360b;
+  --color-ember-800: #8a2c0f;
+  --color-ember-900: #6e250f;
+
+  --color-flame-500: #e0341e;
+  --color-flame-600: #b8281a;
+
+  --color-gold-300: #ffd98a;
+  --color-gold-400: #f6c04e;
+  --color-gold-500: #e9a91d;
+
+  /* Neutrals (warm anthracite) */
+  --color-ink-50: #f7f5f2;
+  --color-ink-100: #ece8e2;
+  --color-ink-200: #d8d2c9;
+  --color-ink-300: #b5ada2;
+  --color-ink-400: #8b8378;
+  --color-ink-500: #665f56;
+  --color-ink-600: #4a453e;
+  --color-ink-700: #33302b;
+  --color-ink-800: #211f1c;
+  --color-ink-900: #16150f;
+  --color-ink-950: #0d0c0a;
+
+  --color-paper: #fbf9f6;
+
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+
+  --shadow-card: 0 1px 2px rgb(22 21 15 / 0.06), 0 12px 32px -12px rgb(22 21 15 / 0.18);
+  --shadow-glow: 0 0 0 1px rgb(244 95 20 / 0.25), 0 20px 60px -20px rgb(244 95 20 / 0.55);
+
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-fade-up: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-ember: ember 4s ease-in-out infinite;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes ember {
+    0%, 100% { opacity: 0.55; transform: scale(1); }
+    50% { opacity: 0.9; transform: scale(1.06); }
+  }
+}
+
+:root {
+  color-scheme: light;
+  --header-height: 4.5rem;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink-800);
+  font-family: var(--font-sans);
+  font-feature-settings: "cv11", "ss01", "kern";
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-ember-500);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--color-ember-200);
+  color: var(--color-ink-900);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Utility layer */
+@utility container-x {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 80rem;
+  padding-inline: 1.25rem;
+  @media (width >= 40rem) { padding-inline: 1.5rem; }
+  @media (width >= 64rem) { padding-inline: 2rem; }
+}
+
+@utility text-gradient-ember {
+  background-image: linear-gradient(100deg, var(--color-gold-300) 0%, var(--color-ember-400) 45%, var(--color-flame-500) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility surface-dark {
+  background-color: var(--color-ink-950);
+  background-image:
+    radial-gradient(60rem 30rem at 85% -10%, rgb(244 95 20 / 0.22), transparent 60%),
+    radial-gradient(40rem 24rem at -10% 110%, rgb(233 169 29 / 0.10), transparent 60%);
+  color: var(--color-ink-50);
+}
+
+/* Native details/summary accordion polish */
+details > summary {
+  list-style: none;
+  cursor: pointer;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+details[open] .faq-chevron {
+  transform: rotate(180deg);
+}
