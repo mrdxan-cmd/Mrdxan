@@ -1,40 +1,83 @@
 # Inhalts-Verifikation vor dem Go-live
 
-Die Build-Umgebung hatte **keinen Zugriff auf www.maler-gl.ch** (Netzwerk-Egress gesperrt) und auch nicht auf Verzeichnisse (local.ch, zefix), Archive (web.archive.org) oder Google Maps. Die folgenden Angaben stammen deshalb aus Suchmaschinen-Snippets und aus dem Google Drive des Auftraggebers (Formular «Artikel 32 Gesuch», Angaben zum Arbeitgeber). Sie müssen vor dem Go-live gegen die bestehende Website und das Impressum geprüft werden.
+## Ausgangslage
 
-Alle betroffenen Stellen sind im Code mit `VERIFY` markiert (`grep -rn VERIFY src/content`).
+Die Build-Umgebung hat **keinen Netzwerkzugriff auf www.maler-gl.ch** (Egress-Proxy antwortet mit 403; ebenso local.ch, zefix.ch, web.archive.org, Google Maps). Der Crawl wurde in beiden Sessions versucht:
 
-| # | Feld | Aktueller Wert | Quelle | Datei | Status |
-|---|------|----------------|--------|-------|--------|
-| 1 | Markenname | Maler Phönix | Aufgabenstellung | `site.ts`, `company.ts` | ✅ |
-| 2 | Rechtsform / Firma | Phönix FO GmbH | local.ch-Eintrag «Phönix Fo GmbH – Maler in Näfels» | `company.ts` | ⬜ Schreibweise prüfen |
-| 3 | UID | CHE-376.925.972 | Drive-Formular | `company.ts` | ⬜ zefix.ch |
-| 4 | MWST-Nummer | – (null) | – | `company.ts` | ⬜ falls MWST-pflichtig eintragen |
-| 5 | Strasse | Burgstrasse 8 | Drive-Formular | `company.ts` | ⬜ |
-| 6 | PLZ / Ort | 8752 Näfels | local.ch, Drive | `company.ts` | ✅ |
-| 7 | Telefon | 079 223 25 13 / +41 79 223 25 13 | Drive-Formular («Telefon Arbeitgeber») | `company.ts` | ⬜ Geschäftsnummer bestätigen |
-| 8 | E-Mail | info@maler-gl.ch | **Annahme** anhand Domain | `company.ts` | ⬜ **muss geprüft werden** |
-| 9 | WhatsApp-Nummer | wie Telefon | Annahme | `company.ts` | ⬜ oder `null` setzen |
-| 10 | Inhaber / Rolle | Firas Othman, Geschäftsführer | Drive-Dokumente | `company.ts` | ⬜ |
-| 11 | Öffnungszeiten | Mo–Fr 07:00–12:00, 13:00–17:30 | **Annahme** | `company.ts` | ⬜ |
-| 12 | Gründungsjahr | – (null) | – | `company.ts` | ⬜ optional |
-| 13 | Sprachen | Deutsch, Englisch, Arabisch, Kurdisch | Annahme | `company.ts` | ⬜ |
-| 14 | Geokoordinaten | 47.0975 / 9.0633 (Näfels Zentrum) | Näherung | `company.ts` | ⬜ exakt geocodieren |
-| 15 | Leistungstexte | neu geschrieben | Aufgabenstellung (4 Bereiche) | `services.ts` | ⬜ mit Live-Texten abgleichen, SEO-Formulierungen übernehmen |
-| 16 | Einzugsgebiet | Kanton Glarus, Linthgebiet, March | Annahme | `service-areas.ts` | ⬜ |
-| 17 | Vertrauensmerkmale / Kennzahlen | Jahre Erfahrung & Projekte = null (ausgeblendet) | – | `trust.ts` | ⬜ echte Zahlen eintragen |
-| 18 | Kundenbewertungen | leer (keine erfunden) | – | `reviews.ts` | ⬜ echte Bewertungen + Google-Rating |
-| 19 | Projekte / Referenzen | 3 Beispiel-Platzhalter | – | `projects.ts` | ⬜ durch echte Projekte + Originalfotos ersetzen |
-| 20 | Social Links | local.ch (aus Suchergebnis), Rest null | Suche | `social.ts` | ⬜ Google-Profil, Instagram, Facebook |
-| 21 | Google-Bewertungslink | null | – | `social.ts` | ⬜ Place-ID-Link eintragen |
-| 22 | Impressum | Standardtexte CH | – | `app/impressum/page.tsx` | ⬜ mit bestehendem Impressum abgleichen |
-| 23 | Datenschutzerklärung | revDSG-konform, Vercel/Resend/Maps erwähnt | – | `app/datenschutz/page.tsx` | ⬜ Hosting/Provider final eintragen |
-| 24 | Alte URLs / Redirects | generische Regeln | – | `config/redirects.ts` | ⬜ nach Crawl vervollständigen |
-| 25 | Logo | neu erstelltes Phönix-Zeichen (SVG) | – | `public/images/brand/` | ⬜ falls Original-Logo existiert: ersetzen |
-| 26 | Design-Mockup | nicht in der Session enthalten | – | – | ⬜ Mockup nachreichen → Abgleich Farben/Typografie/Layout |
+```
+$ npm run crawl:live
+403  https://www.maler-gl.ch
+1 URLs, 0 images downloaded
+```
+
+Damit fehlt die vom Auftrag vorgesehene Quelle der Wahrheit. Die Inhalte stammen deshalb aus drei Quellen mit unterschiedlicher Verlässlichkeit:
+
+| Quelle | Verlässlichkeit | Verwendung |
+|--------|-----------------|------------|
+| **A** Suchmaschinen-Snippets (local.ch-Eintrag «Phönix Fo GmbH – Maler in Näfels») | mittel | Firma, Ort |
+| **B** Dokumente im Google Drive des Auftraggebers (Angaben zum Arbeitgeber Phönix FO GmbH) | mittel–hoch | Adresse, Telefon, UID, Inhaber |
+| **C** Design-Mockup (Homepage) | **nur visuell**; Texte sind Platzhalter (z. B. «Familie Müller», «50+ Bewertungen») | Slogans, Layout, Wording |
+
+Der Auftrag verlangt ausdrücklich, keine Bewertungen, Statistiken, Garantien oder Projektfakten zu erfinden. Mockup-Angaben dieser Art sind daher im Code hinterlegt, aber **deaktiviert** (siehe Tabelle) und erscheinen erst nach Bestätigung.
+
+## Verifizierte / übernommene Daten
+
+| Feld | Wert | Quelle | Status |
+|------|------|--------|--------|
+| Markenname | Maler Phönix | Auftrag, Mockup | ✅ |
+| Firma | Phönix FO GmbH | A (local.ch) | ⬜ Schreibweise («FO»/«Fo») prüfen |
+| Ort | 8752 Näfels GL | A, B | ✅ |
+| Strasse | Burgstrasse 8 | B | ⬜ bestätigen |
+| UID | CHE-376.925.972 | B | ⬜ zefix.ch |
+| Inhaber / Rolle | Firas Othman, Geschäftsführer | B | ⬜ bestätigen |
+| Slogan | «Farbe schafft Lebensräume» | C | ✅ übernommen (Wording, kein Fakt) |
+| Claim | «Aus Glarus. Für schöne Lebensräume.» | C | ✅ übernommen |
+| Handschrift-Notizen | «Schönere Räume. Stärkere Region.», «Gemeinsam schöner wohnen.» | C | ✅ übernommen |
+| Leistungstexte (Teaser) | aus Mockup-Karten | C | ✅ übernommen; Detailtexte neu geschrieben |
+| Footer-Claim | «Qualität. Farbe. Vertrauen.» | C | ✅; Zusatz «Seit über 12 Jahren» deaktiviert |
+
+## Ungelöste Konflikte (Entscheid des Inhabers nötig)
+
+| # | Feld | Wert A/B | Wert Mockup (C) | Aktuell im Code | Datei |
+|---|------|----------|-----------------|-----------------|-------|
+| 1 | **Telefon** | 079 223 25 13 (Arbeitgeber-Telefon in Drive-Formular) | 055 610 27 44 | 079 223 25 13 | `company.ts` |
+| 2 | **E-Mail** | – | info@maler-gl.ch | info@maler-gl.ch (Annahme, deckt sich mit Mockup) | `company.ts` |
+| 3 | **Öffnungszeiten** | – | Mo–Fr 07:00–17:00 | Mo–Fr 07:00–17:00 | `company.ts` |
+| 4 | Garantie «5 Jahre» | – | ja | **deaktiviert** (`verified: false`) | `trust.ts` |
+| 5 | «12+ Jahre Erfahrung» / «Seit über 12 Jahren» | – | ja | **deaktiviert** | `trust.ts` |
+| 6 | Google-Bewertung «4.9 / 5, 50+ Bewertungen» | – | ja | **nicht gesetzt** (`ratingSummary = null`) | `reviews.ts` |
+| 7 | Kundenstimmen (Familie Müller, Thomas Eberle, Sandra Küng) | – | ja | **nicht übernommen** (offensichtliche Platzhalter) | `reviews.ts` |
+| 8 | Projekte (Fassadenrenovation Glarus, Innenanstrich Wohnung Glarus, Neubau Komplettausbau Netstal) | – | ja | als **Platzhalter** mit Badge, ohne Fotos, nicht in Sitemap | `projects.ts` |
+| 9 | Social-Profile Facebook / Instagram / LinkedIn | – | Icons ohne URLs | ausgeblendet bis URLs vorliegen | `social.ts` |
+| 10 | Sprachen, Gründungsjahr, MWST-Nummer | – | – | Annahme / null | `company.ts` |
+| 11 | Hero-/Sektionsfotos (Haus, Berge, Projekte) | – | KI-/Stock-Bilder im Mockup | **nicht verwendet**; SVG-Bergsilhouette + Marken-Grafiken bis echte Fotos importiert sind | `MountainBackdrop.tsx`, `ServiceIllustration.tsx` |
+
+## Importierte Bilder
+
+| Datei | Herkunft | Verwendung |
+|-------|----------|------------|
+| `public/images/brand/phoenix.png` | Vom Auftraggeber geliefertes Phönix-Artwork; schwarzer Hintergrund per `scripts/prepare-phoenix.mjs` freigestellt, getrimmt (1427×996, Alpha) | Hero, Über uns |
+| `public/images/brand/phoenix-logo.png` | dito, 320 px | Header-/Footer-Logo, Mobile-Menü |
+| `public/images/brand/og-default.png` | generiert (`scripts/generate-assets.mjs`) | Social Sharing |
+| `src/app/icon.png`, `src/app/apple-icon.png`, `public/images/brand/icon-512.png` | generiert | Favicon / PWA |
+
+**Keine Projekt- oder Leistungsfotos importiert** – die Live-Site war nicht erreichbar. Vorgehen nach lokalem Crawl: `docs/MIGRATION.md`, Abschnitt 3.
+
+## Seiten, die der Inhaber bestätigen muss
+
+| Seite | Was zu prüfen ist |
+|-------|-------------------|
+| `/` | Telefonnummer, Slogans, Hero-Highlights (Garantie/Erfahrung freischalten?), Projektkarten |
+| `/leistungen/*` | Fachtexte, Leistungsumfang, FAQ-Antworten, Fotos |
+| `/projekte`, `/projekte/*` | Platzhalter durch echte Referenzen ersetzen (Titel, Ort, Jahr, Fotos, Vorher/Nachher) |
+| `/ueber-uns` | Firmengeschichte, Inhaber, Sprachen, Werte |
+| `/kontakt` | Telefon, E-Mail, Adresse, Öffnungszeiten, WhatsApp ja/nein, Empfänger des Formulars |
+| `/faq` | Antworten zu Offerte, Einzugsgebiet, Terminen |
+| `/impressum` | Rechtsform, UID, MWST, vertretungsberechtigte Person |
+| `/datenschutz` | Hosting (Vercel), E-Mail-Dienst (Resend/Webhook), Google Maps |
 
 ## Vorgehen
 
-1. `npm run crawl:live` lokal ausführen (siehe MIGRATION.md) → `scripts/output/live-pages.json` öffnen.
-2. Tabelle Zeile für Zeile abarbeiten, Werte in `src/content/*.ts` korrigieren, `VERIFY`-Kommentare entfernen.
-3. `npm run qa` erneut ausführen (prüft u. a., dass alle `tel:`/`mailto:`-Links den zentralen Daten entsprechen).
+1. `npm run crawl:live` lokal ausführen → `scripts/output/live-pages.json`, `live-images.json`.
+2. Tabellen oben abarbeiten, Werte in `src/content/*.ts` setzen, `VERIFY`-Kommentare entfernen (`grep -rn VERIFY src/content`).
+3. `npm run check:redirects -- http://localhost:3000` und `npm run qa` erneut ausführen.

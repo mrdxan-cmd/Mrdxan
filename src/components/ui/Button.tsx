@@ -2,17 +2,20 @@ import Link from "next/link";
 import type { ComponentProps, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-type Variant = "primary" | "secondary" | "ghost" | "outline-light" | "dark";
+type Variant = "gradient" | "primary" | "secondary" | "ghost" | "outline-light" | "outline-dark" | "dark" | "white";
 type Size = "sm" | "md" | "lg";
 
 const variants: Record<Variant, string> = {
-  primary:
-    "bg-ember-500 text-white shadow-[0_10px_30px_-10px_rgb(244_95_20/0.7)] hover:bg-ember-600 active:bg-ember-700",
+  /** Mockup CTA: magenta → violet → blue pill with glow */
+  gradient:
+    "bg-gradient-brand text-white shadow-glow hover:brightness-110 [background-size:150%_100%] hover:[background-position:100%_0] transition-[background-position,filter]",
+  primary: "bg-brand-magenta text-white hover:bg-brand-pink",
   secondary: "bg-ink-900 text-white hover:bg-ink-800",
   dark: "bg-ink-900 text-white hover:bg-ink-700",
+  white: "bg-white text-ink-900 hover:bg-ink-50",
   ghost: "bg-transparent text-ink-800 hover:bg-ink-100",
-  "outline-light":
-    "border border-white/25 bg-white/5 text-white backdrop-blur-sm hover:bg-white/12 hover:border-white/40",
+  "outline-light": "border border-white/30 bg-white/5 text-white backdrop-blur-sm hover:bg-white/12 hover:border-white/50",
+  "outline-dark": "border border-ink-200 bg-white text-ink-900 hover:border-ink-400",
 };
 
 const sizes: Record<Size, string> = {
@@ -37,7 +40,7 @@ type ButtonButtonProps = CommonProps & { href?: undefined } & Omit<ComponentProp
 export type ButtonProps = ButtonLinkProps | ButtonButtonProps;
 
 export function Button(props: ButtonProps) {
-  const { variant = "primary", size = "md", className, children } = props;
+  const { variant = "gradient", size = "md", className, children } = props;
   const classes = cn(baseClass, variants[variant], sizes[size], className);
 
   if (props.href !== undefined) {

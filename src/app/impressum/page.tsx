@@ -34,12 +34,12 @@ export default function ImpressumPage() {
               </p>
               <p className="mt-3">
                 Telefon:{" "}
-                <a href={telHref} className="font-semibold text-ember-600">
+                <a href={telHref} className="font-semibold text-brand-magenta">
                   {company.contact.phoneDisplay}
                 </a>
                 <br />
                 E-Mail:{" "}
-                <a href={mailHref} className="font-semibold text-ember-600">
+                <a href={mailHref} className="font-semibold text-brand-magenta">
                   {company.contact.email}
                 </a>
               </p>

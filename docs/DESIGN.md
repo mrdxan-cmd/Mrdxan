@@ -1,45 +1,45 @@
-# Design-System
+# Design-System (Stand: Abgleich mit Homepage-Mockup)
 
-Das visuelle Konzept folgt der Vorgabe «Phönix-Hero-Artwork als eigenständiges Bild, alles andere als echte Web-Komponenten».
-Das im Auftrag erwähnte Design-Mockup lag in der Entwicklungs-Session **nicht** vor – die Umsetzung basiert auf der Beschreibung (dunkler Hero mit Phönix, warme Feuerfarben, klare helle Inhaltsbereiche). Sobald das Mockup vorliegt, lassen sich Farben, Typografie und Abstände zentral in `src/app/globals.css` (`@theme`) anpassen.
+Das Mockup (dunkler Alpen-Hero, farbiger Phönix mit Pinsel, Magenta→Violett→Blau-Verlauf, weisse Karten, dunkler Projektbereich und Footer) ist die visuelle Referenz. Alles ausser dem Phönix-Artwork ist als echte HTML/React-Komponente umgesetzt.
 
-## Farben (Tokens)
+## Abgleich Mockup → Implementierung
 
-| Token            | Wert      | Verwendung                              |
-| ---------------- | --------- | --------------------------------------- |
-| `ember-500`      | `#f45f14` | Primär-CTA, Akzente                     |
-| `ember-600/700`  | `#d9470a` / `#b0360b` | Hover/Active                |
-| `flame-500`      | `#e0341e` | Verlauf-Ende, Fehlerzustände            |
-| `gold-300/400`   | `#ffd98a` / `#f6c04e` | Verlauf-Anfang, Sterne, Badges |
-| `ink-950 … 50`   | warmes Anthrazit bis Off-White | Text, dunkle Sektionen, Rahmen |
-| `paper`          | `#fbf9f6` | Seitenhintergrund                       |
+| Mockup-Element | Umsetzung |
+|----------------|-----------|
+| Header: Phönix-Logo + «Maler **Phönix**» (Verlauf) + «FARBE SCHAFFT LEBENSRÄUME», Nav, Telefon-Pill, Verlauf-CTA | `Header.tsx`, `Logo.tsx`, `NavLink.tsx` (aktiver Link mit Verlaufs-Unterstrich) |
+| Hero: «Maler & Gipser / **in Glarus**», Subline, Verlauf-Button + Outline-Button, Trust-Reihe, Phönix rechts, Handschrift-Notizen, Schweizer Fahne | `Hero.tsx`, `MountainBackdrop.tsx` (SVG statt Foto), `SwissFlag.tsx`, Caveat-Font |
+| Leistungen: Eyebrow magenta, «Qualität für heute. Werte für morgen.», Karten mit Bild, rundem Icon-Badge, «Mehr erfahren →» | `ServicesSection.tsx`, `ServiceCard.tsx`, `ServiceIllustration.tsx` (Foto oder Verlauf-Grafik) |
+| Projekte: dunkle Alpen-Sektion, Vorher/Nachher-Slider, Ort mit Pin | `ProjectsSection.tsx`, `ProjectCard.tsx`, `BeforeAfterSlider.tsx` (Range-Input, Tastatur/Touch) |
+| Kundenstimmen: «Vertrauen, das bleibt.», Sterne + Rating rechts, 3 Karten | `ReviewsSection.tsx` – nur echte Daten; leerer Zustand mit Bewertungs-CTA |
+| Kontakt: «Jetzt kostenlose Offerte anfordern.», 3 Kontakt-Items mit Verlauf-Icons, kompaktes Formular, Farbspritzer, «Gemeinsam schöner wohnen.» | `ContactSection.tsx`, `QuoteForm.tsx` (`compact`), `splash-brand`-Utility |
+| Footer: dunkel, Logo, Seiten-Links, Social-Icons, www.maler-gl.ch, Claim, Copyright | `Footer.tsx` |
+| Mobile | Burger-Menü (Portal), gestapelter Hero mit Phönix unter dem Text, Sticky-Leiste Anrufen/WhatsApp/Offerte |
 
-Verlauf `text-gradient-ember` (Gold → Orange → Rot) für Hero-Headline und Kennzahlen; `surface-dark` für dunkle Sektionen mit radialem Ember-Glow.
+Bewusste Abweichungen: Fotos im Mockup (Haus, Berge, Vorher/Nachher, Leistungen) sind KI-/Stock-Bilder und wurden **nicht** übernommen – Platzhalter-Grafiken bis echte Fotos vorliegen. Vier statt drei Leistungskarten (Gipserarbeiten als eigene Seite gemäss Auftrag).
+
+## Farben (Tokens in `src/app/globals.css`)
+
+| Token | Wert | Verwendung |
+|-------|------|------------|
+| `brand-magenta` | `#ff1f8f` | Eyebrows, Links, Verlaufsstart |
+| `brand-violet` | `#7c2cf5` | Verlaufsmitte, Fokus-Ring |
+| `brand-blue` | `#1f7bff` | Verlaufsende |
+| `--gradient-brand` | magenta → violet → blue | Buttons, Headline-Zeile, Icons |
+| `ember-*`, `gold-*` | Orange/Gelb | Akzente des Artworks, Sterne, Badges |
+| `ink-950 … 50` | Navy-Schwarz bis Off-White | Hintergründe, Text |
+| `paper` | `#f7f7fb` | Seitenhintergrund |
 
 ## Typografie
 
-- **Outfit** (Variable, 100–900) für Überschriften – `font-display`
-- **Inter** (Variable) für Fliesstext – `font-sans`
-- Beide self-hosted über `next/font/local` (`src/fonts/`), `font-display: swap`, Preload.
+- **Inter** (Variable) für Headlines (800, enge Laufweite) und Fliesstext
+- **Caveat 700** für handschriftliche Akzente
+- Self-hosted via `next/font/local` (`src/fonts/`), OFL-Lizenzen beiliegend
 
-## Komponenten
+## Assets
 
-- `Button` – Varianten `primary`, `secondary`, `dark`, `ghost`, `outline-light`; rendert `<a>` für tel:/mailto:/extern, `<Link>` intern.
-- `Section` / `SectionHeading` / `Container` – Layoutraster (max. 80 rem, responsive Innenabstände).
-- `Header` (Sticky, Desktop-Dropdown für Leistungen) + `MobileNav` (Fullscreen-Dialog per Portal, Escape/Scroll-Lock).
-- `StickyContactBar` – mobile Schnellaktionen Anrufen / WhatsApp / Offerte (reine Links, funktioniert ohne JS).
-- `ServiceCard`, `ServiceIllustration` (Foto oder Marken-Grafik), `ProjectCard`, `ProjectMedia` (Foto oder neutraler Platzhalter – nie KI-Bilder).
-- `FaqAccordion` – natives `<details>/<summary>`, barrierefrei, ohne JS.
-- `QuoteForm` – Client-Komponente mit `useActionState`, Server Action `submitQuote`, Zod-Validierung, Honeypot, Rate-Limit, kontrollierte Felder (Eingaben bleiben bei Fehlern erhalten).
-- `JsonLd`, `Breadcrumbs` – strukturierte Daten.
+- `scripts/prepare-phoenix.mjs` – stellt das gelieferte JPG frei (Screen-Keying, Alpha) → `phoenix.png`, `phoenix-logo.png`
+- `scripts/generate-assets.mjs` – OG-Bild (1200×630) und Icons (64/180/512)
 
-## Responsive Breakpoints
+## Breakpoints & Barrierefreiheit
 
-Mobile-first. Geprüfte Viewports: 360, 390, 430, 768, 1024, 1440 px (`scripts/qa/screenshots.mjs`, inkl. Test auf horizontales Scrollen).
-
-- < 1024 px: Burger-Menü, Sticky-Kontaktleiste, einspaltige Sektionen (ab 640 px zweispaltige Karten)
-- ≥ 1024 px: Desktop-Navigation, Hero zweispaltig, Karten 3–4-spaltig; Telefonnummer im Header ab 1280 px
-
-## Barrierefreiheit
-
-Skip-Link, semantische Landmarks, sichtbarer Fokus (`:focus-visible`), `aria-*` für Menü und Formular, Kontrast ≥ 4.5:1 für Text, `prefers-reduced-motion` respektiert, Formular-Fehler mit `role="alert"`, Erfolgsmeldung mit `role="status"`.
+Geprüfte Viewports: 360, 390, 430, 768, 1024, 1440 px. Skip-Link, Landmarks, sichtbarer Fokus, `aria-*` für Menü/Formular/Slider, `prefers-reduced-motion`, Formularfehler mit `role="alert"`, Erfolg mit `role="status"`.

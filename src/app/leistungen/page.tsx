@@ -33,9 +33,9 @@ export default function LeistungenPage() {
             <article key={service.slug} className="grid items-center gap-8 lg:grid-cols-2 lg:gap-14">
               <ServiceIllustration service={service} className={cn("aspect-[4/3] lg:aspect-[5/4]", i % 2 === 1 && "lg:order-2")} />
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-ember-600">{service.label}</p>
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-brand-magenta">{service.label}</p>
                 <h2 className="mt-2 font-display text-3xl font-bold text-ink-900 sm:text-4xl">
-                  <Link href={`/leistungen/${service.slug}`} className="hover:text-ember-600">
+                  <Link href={`/leistungen/${service.slug}`} className="hover:text-brand-magenta">
                     {service.title}
                   </Link>
                 </h2>
@@ -43,12 +43,12 @@ export default function LeistungenPage() {
                 <ul className="mt-6 grid gap-2.5 sm:grid-cols-2">
                   {service.features.slice(0, 4).map((f) => (
                     <li key={f} className="flex items-start gap-2.5 text-[15px] text-ink-700">
-                      <CheckIcon size={18} strokeWidth={2.4} className="mt-0.5 shrink-0 text-ember-500" />
+                      <CheckIcon size={18} strokeWidth={2.4} className="mt-0.5 shrink-0 text-brand-magenta" />
                       {f}
                     </li>
                   ))}
                 </ul>
-                <Link href={`/leistungen/${service.slug}`} className="mt-7 inline-flex items-center gap-2 font-semibold text-ember-600 hover:text-ember-700">
+                <Link href={`/leistungen/${service.slug}`} className="mt-7 inline-flex items-center gap-2 font-semibold text-brand-magenta hover:text-brand-violet">
                   Mehr zu {service.label}
                   <ArrowRightIcon size={18} />
                 </Link>

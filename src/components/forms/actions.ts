@@ -68,12 +68,12 @@ export async function submitQuote(_prev: QuoteState, formData: FormData): Promis
     };
   }
 
-  const serviceLabel = serviceOptions.find((o) => o.value === parsed.data.service)?.label ?? parsed.data.service;
+  const serviceLabel = serviceOptions.find((o) => o.value === parsed.data.service)?.label ?? "Nicht angegeben";
   const result = await sendQuoteMail({
     name: parsed.data.name,
     phone: parsed.data.phone,
     email: parsed.data.email,
-    location: parsed.data.location,
+    location: parsed.data.location || "Nicht angegeben",
     service: serviceLabel,
     message: parsed.data.message,
   });

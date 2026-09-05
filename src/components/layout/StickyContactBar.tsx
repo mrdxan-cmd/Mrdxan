@@ -1,5 +1,5 @@
 import { company, telHref, whatsappHref } from "@/content/company";
-import { PhoneIcon, WhatsAppIcon } from "@/components/ui/Icons";
+import { ArrowRightIcon, PhoneIcon, WhatsAppIcon } from "@/components/ui/Icons";
 import Link from "next/link";
 
 /**
@@ -11,7 +11,7 @@ export function StickyContactBar() {
     <div className="fixed inset-x-0 bottom-0 z-40 border-t border-ink-100 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden print:hidden">
       <div className="grid grid-cols-3 divide-x divide-ink-100 text-xs font-semibold">
         <a href={telHref} className="flex h-14 flex-col items-center justify-center gap-1 text-ink-800" aria-label={`Anrufen: ${company.contact.phoneDisplay}`}>
-          <PhoneIcon size={20} className="text-ember-500" />
+          <PhoneIcon size={20} className="text-brand-magenta" />
           Anrufen
         </a>
         {whatsappHref ? (
@@ -21,12 +21,12 @@ export function StickyContactBar() {
           </a>
         ) : (
           <Link href="/kontakt#kontaktdaten" className="flex h-14 flex-col items-center justify-center gap-1 text-ink-800">
-            <PhoneIcon size={20} className="text-ember-500" />
+            <PhoneIcon size={20} className="text-brand-magenta" />
             Kontakt
           </Link>
         )}
-        <Link href="/kontakt#offerte" className="flex h-14 flex-col items-center justify-center gap-1 bg-ember-500 text-white">
-          <span className="text-base leading-none">✓</span>
+        <Link href="/kontakt#offerte" className="flex h-14 flex-col items-center justify-center gap-1 bg-gradient-brand text-white">
+          <ArrowRightIcon size={18} />
           Offerte
         </Link>
       </div>

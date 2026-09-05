@@ -8,6 +8,11 @@ export const serviceOptions = [
 
 const serviceValues = serviceOptions.map((o) => o.value) as [string, ...string[]];
 
+/**
+ * Validation for the quote form. The homepage uses the compact variant from the
+ * mockup (Name, E-Mail, Telefon, Nachricht) – therefore location and service are
+ * optional; the full form on /kontakt shows them as additional fields.
+ */
 export const quoteSchema = z.object({
   name: z.string().trim().min(2, "Bitte geben Sie Ihren Namen an.").max(120),
   phone: z
@@ -17,8 +22,8 @@ export const quoteSchema = z.object({
     .max(30)
     .regex(/^[+0-9 ()/.-]+$/, "Bitte geben Sie eine gültige Telefonnummer an."),
   email: z.string().trim().toLowerCase().email("Bitte geben Sie eine gültige E-Mail-Adresse an.").max(200),
-  location: z.string().trim().min(2, "Bitte geben Sie PLZ und Ort des Objekts an.").max(120),
-  service: z.enum(serviceValues, { message: "Bitte wählen Sie eine Leistung." }),
+  location: z.string().trim().max(120).optional().or(z.literal("")),
+  service: z.enum(serviceValues).optional().or(z.literal("")),
   message: z.string().trim().min(10, "Beschreiben Sie Ihr Projekt bitte in ein paar Sätzen.").max(4000),
   consent: z.literal("on", { message: "Bitte stimmen Sie der Datenschutzerklärung zu." }),
   /** Honeypot – must stay empty */

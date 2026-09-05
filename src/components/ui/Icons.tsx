@@ -1,6 +1,6 @@
 import type { SVGProps } from "react";
 import type { ServiceIcon } from "@/content/services";
-import type { TrustIcon } from "@/content/trust";
+import type { HighlightIcon, TrustIcon } from "@/content/trust";
 import type { SocialPlatform } from "@/content/social";
 
 type IconProps = SVGProps<SVGSVGElement> & { size?: number };
@@ -97,6 +97,40 @@ export const QuoteIcon = (p: IconProps) => (
   </svg>
 );
 
+export const LockIcon = (p: IconProps) => (
+  <svg {...base(p)}>
+    <rect x="5" y="10.5" width="14" height="10" rx="2.5" />
+    <path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" />
+  </svg>
+);
+
+export const PlayIcon = (p: IconProps) => (
+  <svg {...base(p)} fill="currentColor" stroke="none">
+    <path d="M8 5.5v13l11-6.5-11-6.5Z" />
+  </svg>
+);
+
+export const UsersIcon = (p: IconProps) => (
+  <svg {...base(p)}>
+    <circle cx="9" cy="8" r="3.5" />
+    <path d="M2.5 19.5a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M21.5 19.5a6.5 6.5 0 0 0-4.5-6.2" />
+  </svg>
+);
+
+export const BoltIcon = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M13 2.5 4.5 13.5H12l-1 8 8.5-11H12l1-8Z" />
+  </svg>
+);
+
+export const RollerIcon = (p: IconProps) => (
+  <svg {...base(p)}>
+    <rect x="4" y="4" width="13" height="6" rx="2" />
+    <path d="M17 7h2.5a1 1 0 0 1 1 1v3a1.5 1.5 0 0 1-1.5 1.5H12V15" />
+    <rect x="10" y="15" width="4" height="6" rx="1.5" />
+  </svg>
+);
+
 /* ---- Service icons ---- */
 
 const FacadeIcon = (p: IconProps) => (
@@ -137,6 +171,21 @@ export function ServiceGlyph({ icon, ...props }: IconProps & { icon: ServiceIcon
       return <TrowelIcon {...props} />;
     case "building":
       return <BuildingIcon {...props} />;
+  }
+}
+
+export function HighlightGlyph({ icon, ...props }: IconProps & { icon: HighlightIcon }) {
+  switch (icon) {
+    case "shield":
+      return <ShieldIcon {...props} />;
+    case "users":
+      return <UsersIcon {...props} />;
+    case "bolt":
+      return <BoltIcon {...props} />;
+    case "check":
+      return <CheckIcon {...props} />;
+    case "sparkles":
+      return <SparklesIcon {...props} />;
   }
 }
 

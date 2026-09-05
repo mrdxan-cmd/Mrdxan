@@ -1,14 +1,24 @@
 @import "tailwindcss";
 
 /*
-  Design tokens for the Maler Phönix website.
-  Dark, warm "phoenix" hero palette + clean light content sections.
+  Design tokens for the Maler Phönix website – aligned to the homepage mockup:
+  dark navy hero/header/footer, magenta → violet → blue brand gradient,
+  fiery orange/yellow accents from the phoenix artwork, clean white content.
 */
 @theme {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-display: var(--font-outfit), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-hand: var(--font-caveat), "Segoe Script", "Bradley Hand", cursive;
 
-  /* Brand */
+  /* Brand gradient stops */
+  --color-brand-magenta: #ff1f8f;
+  --color-brand-pink: #ff3d9a;
+  --color-brand-violet: #7c2cf5;
+  --color-brand-indigo: #4b3bff;
+  --color-brand-blue: #1f7bff;
+  --color-brand-sky: #24c4ff;
+
+  /* Phoenix accents */
   --color-ember-50: #fff4ec;
   --color-ember-100: #ffe4d1;
   --color-ember-200: #ffc7a3;
@@ -17,36 +27,32 @@
   --color-ember-500: #f45f14;
   --color-ember-600: #d9470a;
   --color-ember-700: #b0360b;
-  --color-ember-800: #8a2c0f;
-  --color-ember-900: #6e250f;
-
   --color-flame-500: #e0341e;
   --color-flame-600: #b8281a;
-
   --color-gold-300: #ffd98a;
   --color-gold-400: #f6c04e;
   --color-gold-500: #e9a91d;
 
-  /* Neutrals (warm anthracite) */
-  --color-ink-50: #f7f5f2;
-  --color-ink-100: #ece8e2;
-  --color-ink-200: #d8d2c9;
-  --color-ink-300: #b5ada2;
-  --color-ink-400: #8b8378;
-  --color-ink-500: #665f56;
-  --color-ink-600: #4a453e;
-  --color-ink-700: #33302b;
-  --color-ink-800: #211f1c;
-  --color-ink-900: #16150f;
-  --color-ink-950: #0d0c0a;
+  /* Neutrals (cool navy-black like the mockup) */
+  --color-ink-50: #f5f6fa;
+  --color-ink-100: #e8eaf1;
+  --color-ink-200: #d2d6e2;
+  --color-ink-300: #aab0c3;
+  --color-ink-400: #7d8499;
+  --color-ink-500: #5a6076;
+  --color-ink-600: #414658;
+  --color-ink-700: #2b2f3f;
+  --color-ink-800: #1b1d2b;
+  --color-ink-900: #10111c;
+  --color-ink-950: #07070f;
 
-  --color-paper: #fbf9f6;
+  --color-paper: #f7f7fb;
 
   --radius-xl: 1rem;
   --radius-2xl: 1.5rem;
 
-  --shadow-card: 0 1px 2px rgb(22 21 15 / 0.06), 0 12px 32px -12px rgb(22 21 15 / 0.18);
-  --shadow-glow: 0 0 0 1px rgb(244 95 20 / 0.25), 0 20px 60px -20px rgb(244 95 20 / 0.55);
+  --shadow-card: 0 1px 2px rgb(16 17 28 / 0.05), 0 14px 34px -14px rgb(16 17 28 / 0.18);
+  --shadow-glow: 0 12px 34px -12px rgb(255 31 143 / 0.55), 0 12px 34px -12px rgb(31 123 255 / 0.45);
 
   --animate-float: float 7s ease-in-out infinite;
   --animate-fade-up: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -68,7 +74,9 @@
 
 :root {
   color-scheme: light;
-  --header-height: 4.5rem;
+  --header-height: 4.75rem;
+  --gradient-brand: linear-gradient(90deg, var(--color-brand-magenta) 0%, var(--color-brand-violet) 55%, var(--color-brand-blue) 100%);
+  --gradient-brand-soft: linear-gradient(90deg, var(--color-brand-magenta) 0%, var(--color-brand-violet) 100%);
 }
 
 html {
@@ -86,7 +94,7 @@ body {
 
 h1, h2, h3, h4 {
   font-family: var(--font-display);
-  letter-spacing: -0.015em;
+  letter-spacing: -0.025em;
   text-wrap: balance;
 }
 
@@ -95,13 +103,13 @@ p {
 }
 
 :focus-visible {
-  outline: 3px solid var(--color-ember-500);
+  outline: 3px solid var(--color-brand-magenta);
   outline-offset: 3px;
   border-radius: 4px;
 }
 
 ::selection {
-  background: var(--color-ember-200);
+  background: #ffd1e8;
   color: var(--color-ink-900);
 }
 
@@ -114,14 +122,21 @@ p {
   }
 }
 
-/* Utility layer */
+/* ---------- Utilities ---------- */
 @utility container-x {
   margin-inline: auto;
   width: 100%;
   max-width: 80rem;
   padding-inline: 1.25rem;
   @media (width >= 40rem) { padding-inline: 1.5rem; }
-  @media (width >= 64rem) { padding-inline: 2rem; }
+  @media (width >= 64rem) { padding-inline: 2.5rem; }
+}
+
+@utility text-gradient-brand {
+  background-image: var(--gradient-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 @utility text-gradient-ember {
@@ -131,12 +146,30 @@ p {
   color: transparent;
 }
 
+@utility bg-gradient-brand {
+  background-image: var(--gradient-brand);
+}
+
 @utility surface-dark {
   background-color: var(--color-ink-950);
   background-image:
-    radial-gradient(60rem 30rem at 85% -10%, rgb(244 95 20 / 0.22), transparent 60%),
-    radial-gradient(40rem 24rem at -10% 110%, rgb(233 169 29 / 0.10), transparent 60%);
+    radial-gradient(70rem 36rem at 80% -20%, rgb(124 44 245 / 0.28), transparent 60%),
+    radial-gradient(50rem 30rem at -10% 110%, rgb(255 31 143 / 0.16), transparent 60%),
+    radial-gradient(40rem 26rem at 110% 100%, rgb(31 123 255 / 0.18), transparent 60%);
   color: var(--color-ink-50);
+}
+
+@utility font-hand {
+  font-family: var(--font-hand);
+}
+
+/* Paint splash decoration (contact section / CTA) */
+@utility splash-brand {
+  background-image:
+    radial-gradient(closest-side, rgb(255 31 143 / 0.9), transparent 70%),
+    radial-gradient(closest-side at 70% 30%, rgb(124 44 245 / 0.85), transparent 70%),
+    radial-gradient(closest-side at 30% 70%, rgb(31 123 255 / 0.85), transparent 70%);
+  filter: blur(28px);
 }
 
 /* Native details/summary accordion polish */
@@ -149,4 +182,27 @@ details > summary::-webkit-details-marker {
 }
 details[open] .faq-chevron {
   transform: rotate(180deg);
+}
+
+/* Before/after compare slider */
+.compare-range {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: ew-resize;
+}
+.compare-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  background: transparent;
+}
+.compare-range::-moz-range-thumb {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 9999px;
+  background: transparent;
 }

@@ -3,18 +3,21 @@
  *
  * IMPORTANT – real content only:
  * The photographs and project descriptions on https://www.maler-gl.ch are the
- * source of truth. They could not be downloaded from the build environment.
+ * source of truth. They could not be downloaded from the build environment
+ * (network egress to maler-gl.ch is blocked – see docs/MIGRATION.md).
  *
- * Workflow to import them (see docs/MIGRATION.md → "Projekte & Bilder"):
- *   1. `node scripts/crawl-live-site.mjs` on a machine with internet access
+ * Workflow to import them:
+ *   1. `npm run crawl:live` on a machine with internet access
  *      → downloads every image from the live site into public/images/imported/
  *   2. Move the relevant photos to public/images/projects/<slug>/ and describe
  *      each project below with `placeholder: false`.
+ *   3. For before/after pairs set `beforeAfter` – the card then renders the
+ *      interactive compare slider from the mockup.
  *
- * Entries with `placeholder: true` are SAMPLE structures only. They are
- * rendered with a visible "Beispiel" badge, are excluded from the sitemap and
- * are hidden entirely in production unless NEXT_PUBLIC_SHOW_PLACEHOLDERS=true.
- * No AI-generated images are used – placeholders render a neutral graphic.
+ * Entries with `placeholder: true` are SAMPLE structures only (titles follow the
+ * mockup). They are rendered with a visible "Beispiel" badge, are excluded from the
+ * sitemap and are hidden entirely in production unless
+ * NEXT_PUBLIC_SHOW_PLACEHOLDERS=true. No AI-generated images are used.
  */
 
 import type { Service } from "./services";
@@ -43,6 +46,8 @@ export interface Project {
   scope: string[];
   /** Cover image – optional until real photos are imported */
   cover?: ProjectImage;
+  /** Before/after pair – enables the compare slider */
+  beforeAfter?: { before: ProjectImage; after: ProjectImage };
   /** Gallery images */
   gallery?: ProjectImage[];
   /** Sample entry – replace with a real reference before go-live */
@@ -51,12 +56,11 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    slug: "fassadenrenovation-einfamilienhaus",
-    title: "Fassadenrenovation Einfamilienhaus",
-    location: "Glarus Nord",
-    year: "2024",
+    slug: "fassadenrenovation-glarus",
+    title: "Fassadenrenovation",
+    location: "Glarus",
     services: ["fassaden", "gipserarbeiten"],
-    teaser: "Putzsanierung und zweischichtiger Silikonharz-Anstrich an einem Einfamilienhaus.",
+    teaser: "Putzsanierung und wetterbeständiger Neuanstrich einer Wohnhausfassade.",
     description: [
       "BEISPIELPROJEKT – Struktur für eine reale Referenz. Beschreiben Sie hier Ausgangslage, Ziel und Resultat des Projekts in zwei bis drei Absätzen.",
     ],
@@ -64,12 +68,11 @@ export const projects: Project[] = [
     placeholder: true,
   },
   {
-    slug: "wohnungsrenovation-mieterwechsel",
-    title: "Wohnungsrenovation bei Mieterwechsel",
-    location: "Näfels GL",
-    year: "2024",
+    slug: "innenanstrich-wohnung-glarus",
+    title: "Innenanstrich Wohnung",
+    location: "Glarus",
     services: ["malerarbeiten"],
-    teaser: "Wände und Decken einer 4.5-Zimmer-Wohnung frisch gestrichen, Türen und Rahmen lackiert.",
+    teaser: "Wände und Decken frisch gestrichen, Türen und Rahmen lackiert.",
     description: [
       "BEISPIELPROJEKT – Struktur für eine reale Referenz. Beschreiben Sie hier Ausgangslage, Ziel und Resultat des Projekts in zwei bis drei Absätzen.",
     ],
@@ -77,12 +80,11 @@ export const projects: Project[] = [
     placeholder: true,
   },
   {
-    slug: "neubau-mehrfamilienhaus",
-    title: "Gipser- und Malerarbeiten Neubau Mehrfamilienhaus",
-    location: "Linthgebiet",
-    year: "2023",
+    slug: "neubau-komplettausbau-netstal",
+    title: "Neubau – Komplettausbau",
+    location: "Netstal, GL",
     services: ["neubau-renovation", "gipserarbeiten", "malerarbeiten"],
-    teaser: "Weissputz, Deckenspachtelungen und Anstriche in sechs Wohnungen – termingerecht zur Übergabe.",
+    teaser: "Gipser- und Malerarbeiten in einem Neubau – termingerecht zur Übergabe.",
     description: [
       "BEISPIELPROJEKT – Struktur für eine reale Referenz. Beschreiben Sie hier Ausgangslage, Ziel und Resultat des Projekts in zwei bis drei Absätzen.",
     ],

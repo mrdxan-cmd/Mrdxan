@@ -8,7 +8,8 @@ AKTUELLE WEBSITE (maler-gl.ch)      bleibt online
         │
 NEUE WEBSITE (dieses Repository)
   1. Entwicklung & Build        ✅ erledigt (siehe docs/QA-REPORT.md)
-  2. Inhalte verifizieren       ⬜ docs/CONTENT-VERIFICATION.md abarbeiten
+  1b. Abgleich mit Design-Mockup ✅ erledigt (docs/DESIGN.md)
+  2. Inhalte verifizieren       ⬜ docs/CONTENT-VERIFICATION.md abarbeiten (Konflikte Telefon/Öffnungszeiten)
   3. Bilder importieren         ⬜ scripts/crawl-live-site.mjs
   4. Redirects vervollständigen ⬜ src/config/redirects.ts + scripts/check-redirects.mjs
   5. Preview-Deployment         ⬜ Vercel, *.vercel.app (noindex)
@@ -19,7 +20,7 @@ NEUE WEBSITE (dieses Repository)
 
 ## 1. Bestehende Website analysieren (lokal, mit Internetzugang)
 
-Aus der Build-Umgebung war maler-gl.ch nicht erreichbar. Der Crawl muss daher einmalig lokal ausgeführt werden – er ist **read-only** und verändert die bestehende Website nicht:
+Aus der Build-Umgebung war maler-gl.ch in beiden Sessions nicht erreichbar (Egress-Proxy: `403 https://www.maler-gl.ch`, 0 Bilder). Der Crawl muss daher einmalig lokal ausgeführt werden – er ist **read-only** und verändert die bestehende Website nicht:
 
 ```bash
 npm run crawl:live            # = node scripts/crawl-live-site.mjs https://www.maler-gl.ch

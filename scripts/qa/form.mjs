@@ -22,7 +22,7 @@ try {
   await page.goto(baseUrl + "/kontakt#offerte", { waitUntil: "networkidle" });
 
   const form = page.locator("form").first();
-  const submit = form.getByRole("button", { name: "Offerte anfragen" });
+  const submit = form.getByRole("button", { name: /Offerte anfordern/ });
 
   // 1. Empty submit (browser validation is disabled via noValidate, so the server action validates)
   await submit.click();
@@ -31,7 +31,7 @@ try {
   const alertText = await alert.textContent();
   check("empty submit shows summary error", /markierten Felder/.test(alertText ?? ""), alertText ?? "");
   const errorCount = await form.locator("p.text-flame-600").count();
-  check("empty submit shows field errors", errorCount >= 6, `${errorCount} field errors`);
+  check("empty submit shows field errors", errorCount >= 4, `${errorCount} field errors`);
 
   // 2. Invalid e-mail
   await form.locator('input[name="name"]').fill("Test Person");
@@ -39,6 +39,7 @@ try {
   await form.locator('input[name="email"]').fill("keine-email");
   await form.locator('input[name="location"]').fill("8752 Näfels");
   await form.locator('select[name="service"]').selectOption("malerarbeiten");
+  check("full form shows location and service fields", (await form.locator('input[name="location"]').count()) === 1 && (await form.locator('select[name="service"]').count()) === 1);
   await form.locator('textarea[name="message"]').fill("QA-Testanfrage: 4.5-Zimmer-Wohnung, Wände und Decken streichen.");
   await form.locator('input[name="consent"]').check();
   await submit.click();
@@ -58,7 +59,23 @@ try {
   const statusText = await status.textContent();
   check("valid submit shows success", /Anfrage gesendet/.test(statusText ?? ""), statusText ?? "");
 
-  // 4. Service page form preselects the service
+  // 4. Homepage compact form (mockup: Name · E-Mail · Telefon · Nachricht)
+  await page.goto(baseUrl + "/#offerte", { waitUntil: "networkidle" });
+  const homeForm = page.locator("#offerte form").first();
+  const compactFields = await homeForm.locator("input:not([type=hidden]):not([type=checkbox]):not([name=website]), textarea").count();
+  check("homepage compact form has 4 visible fields", compactFields === 4, `${compactFields} fields`);
+  check("homepage compact form hides service select", (await homeForm.locator("select").count()) === 0);
+  await homeForm.locator('input[name="name"]').fill("Test Person");
+  await homeForm.locator('input[name="email"]').fill("qa@example.com");
+  await homeForm.locator('input[name="phone"]').fill("079 000 00 00");
+  await homeForm.locator('textarea[name="message"]').fill("QA-Testanfrage über das Startseiten-Formular.");
+  await homeForm.locator('input[name="consent"]').check();
+  await homeForm.getByRole("button", { name: /Offerte anfordern/ }).click();
+  const homeStatus = page.locator('#offerte div[role="status"]');
+  await homeStatus.waitFor({ timeout: 20000 });
+  check("homepage compact form submits successfully", /Anfrage gesendet/.test((await homeStatus.textContent()) ?? ""));
+
+  // 5. Service page form preselects the service
   await page.goto(baseUrl + "/leistungen/fassaden#offerte", { waitUntil: "networkidle" });
   const preselected = await page.locator('select[name="service"]').inputValue();
   check("service page preselects service", preselected === "fassaden", preselected);

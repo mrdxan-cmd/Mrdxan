@@ -18,7 +18,7 @@ const tones = {
 };
 
 const paddings = {
-  normal: "py-16 sm:py-20 lg:py-28",
+  normal: "py-16 sm:py-20 lg:py-24",
   tight: "py-10 sm:py-14",
   none: "",
 };
@@ -37,16 +37,17 @@ interface SectionHeadingProps {
   className?: string;
 }
 
+/** Mockup pattern: small magenta uppercase eyebrow + large bold headline ending with a period. */
 export function SectionHeading({ eyebrow, title, text, align = "left", tone = "light", as: Tag = "h2", className }: SectionHeadingProps) {
   const dark = tone === "dark";
   return (
     <div className={cn("max-w-2xl", align === "center" && "mx-auto text-center", className)}>
       {eyebrow && (
-        <p className={cn("mb-3 text-xs font-bold uppercase tracking-[0.18em]", dark ? "text-ember-300" : "text-ember-600")}>
+        <p className={cn("mb-3 text-xs font-extrabold uppercase tracking-[0.18em]", dark ? "text-brand-pink" : "text-brand-magenta")}>
           {eyebrow}
         </p>
       )}
-      <Tag className={cn("font-display text-3xl font-bold leading-[1.1] sm:text-4xl lg:text-[2.75rem]", dark ? "text-white" : "text-ink-900")}>
+      <Tag className={cn("font-display text-[1.9rem] font-extrabold leading-[1.12] sm:text-4xl lg:text-[2.6rem]", dark ? "text-white" : "text-ink-900")}>
         {title}
       </Tag>
       {text && <p className={cn("mt-4 text-base leading-relaxed sm:text-lg", dark ? "text-ink-200" : "text-ink-600")}>{text}</p>}

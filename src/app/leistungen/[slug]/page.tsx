@@ -68,7 +68,7 @@ export default async function ServicePage({ params }: PageProps<"/leistungen/[sl
             <ul className="mt-5 grid gap-3 sm:grid-cols-2">
               {service.features.map((f) => (
                 <li key={f} className="flex items-start gap-3 rounded-xl border border-ink-100 bg-white px-4 py-3 text-[15px] text-ink-800">
-                  <CheckIcon size={18} strokeWidth={2.4} className="mt-0.5 shrink-0 text-ember-500" />
+                  <CheckIcon size={18} strokeWidth={2.4} className="mt-0.5 shrink-0 text-brand-magenta" />
                   {f}
                 </li>
               ))}
@@ -84,7 +84,7 @@ export default async function ServicePage({ params }: PageProps<"/leistungen/[sl
           <ol className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {service.process.map((step, i) => (
               <li key={step.title} className="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
-                <span className="font-display text-4xl font-extrabold text-gradient-ember">0{i + 1}</span>
+                <span className="font-display text-4xl font-extrabold text-gradient-brand">0{i + 1}</span>
                 <h3 className="mt-3 font-display text-lg font-bold text-white">{step.title}</h3>
                 <p className="mt-2 text-[15px] leading-relaxed text-ink-300">{step.text}</p>
               </li>

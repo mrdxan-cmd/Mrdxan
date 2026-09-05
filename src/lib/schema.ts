@@ -23,7 +23,7 @@ export function localBusinessSchema(): JsonLd {
     name: company.brand,
     legalName: company.legalName,
     url: absoluteUrl("/"),
-    logo: absoluteUrl("/images/brand/logo-mark.svg"),
+    logo: absoluteUrl("/images/brand/icon-512.png"),
     image: absoluteUrl(site.ogImage),
     description: company.shortDescription,
     telephone: company.contact.phoneE164,

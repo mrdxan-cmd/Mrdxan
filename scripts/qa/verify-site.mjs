@@ -131,7 +131,7 @@ for (const link of [...seenLinks].sort()) {
     fail("manifest.webmanifest", "invalid JSON");
   }
 }
-for (const asset of ["/icon.svg", "/apple-icon.png", "/images/brand/og-default.png", "/images/brand/phoenix.svg", "/images/brand/icon-512.png"]) {
+for (const asset of ["/apple-icon.png", "/images/brand/og-default.png", "/images/brand/phoenix.png", "/images/brand/phoenix-logo.png", "/images/brand/icon-512.png"]) {
   const res = await fetch(baseUrl + asset);
   if (res.status === 200) ok(`asset ${asset}`, res.headers.get("content-type") ?? ""); else fail(`asset ${asset}`, `status ${res.status}`);
 }

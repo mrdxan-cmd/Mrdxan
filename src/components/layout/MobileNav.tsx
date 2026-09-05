@@ -6,7 +6,7 @@ import { useEffect, useId, useState } from "react";
 import { createPortal } from "react-dom";
 import { company, mailHref, telHref } from "@/content/company";
 import { mainNavigation } from "@/content/navigation";
-import { CloseIcon, MailIcon, MenuIcon, PhoneIcon } from "@/components/ui/Icons";
+import { ArrowRightIcon, CloseIcon, MailIcon, MenuIcon, PhoneIcon } from "@/components/ui/Icons";
 import { Button } from "@/components/ui/Button";
 import { LogoMark } from "./Logo";
 import { cn } from "@/lib/utils";
@@ -46,7 +46,7 @@ export function MobileNav() {
         aria-expanded={open}
         aria-controls={panelId}
         aria-label="Menü öffnen"
-        className="inline-flex h-11 w-11 items-center justify-center rounded-full text-ink-900 transition-colors hover:bg-ink-100"
+        className="inline-flex h-11 w-11 items-center justify-center rounded-full text-white transition-colors hover:bg-white/10"
       >
         <MenuIcon size={24} />
       </button>
@@ -55,79 +55,76 @@ export function MobileNav() {
       {open &&
         typeof document !== "undefined" &&
         createPortal(
-      <div
-        id={panelId}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Navigation"
-        className="fixed inset-0 z-[60] flex flex-col bg-ink-950 text-white animate-fade-up [animation-duration:200ms]"
-      >
-        <div className="flex h-(--header-height) items-center justify-between px-5">
-          <span className="flex items-center gap-3">
-            <LogoMark className="h-9 w-9" />
-            <span className="font-display text-lg font-bold">Maler Phönix</span>
-          </span>
-          <button
-            type="button"
-            onClick={() => setOpen(false)}
-            aria-label="Menü schliessen"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full text-white transition-colors hover:bg-white/10"
-          >
-            <CloseIcon size={24} />
-          </button>
-        </div>
+          <div id={panelId} role="dialog" aria-modal="true" aria-label="Navigation" className="surface-dark fixed inset-0 z-[60] flex flex-col text-white">
+            <div className="flex h-(--header-height) items-center justify-between px-5">
+              <span className="flex items-center gap-3">
+                <LogoMark className="h-10" />
+                <span className="font-display text-lg font-extrabold">
+                  Maler <span className="text-gradient-brand">Phönix</span>
+                </span>
+              </span>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                aria-label="Menü schliessen"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full text-white transition-colors hover:bg-white/10"
+              >
+                <CloseIcon size={24} />
+              </button>
+            </div>
 
-        <nav aria-label="Mobile Navigation" className="flex-1 overflow-y-auto px-5 pb-6 pt-2">
-          <ul className="space-y-1">
-            {mainNavigation.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className={cn(
-                    "block rounded-xl px-4 py-3.5 font-display text-2xl font-bold transition-colors hover:bg-white/5",
-                    pathname === item.href ? "text-ember-300" : "text-white",
-                  )}
-                >
-                  {item.label}
-                </Link>
-                {item.children && (
-                  <ul className="mb-2 ml-4 border-l border-white/10 pl-2">
-                    {item.children.map((child) => (
-                      <li key={child.href}>
-                        <Link
-                          href={child.href}
-                          className={cn(
-                            "block rounded-lg px-4 py-2.5 text-base transition-colors hover:bg-white/5",
-                            pathname === child.href ? "text-ember-300" : "text-ink-200",
-                          )}
-                        >
-                          {child.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            ))}
-          </ul>
-        </nav>
+            <nav aria-label="Mobile Navigation" className="flex-1 overflow-y-auto px-5 pb-6 pt-2">
+              <ul className="space-y-1">
+                {mainNavigation.map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className={cn(
+                        "block rounded-xl px-4 py-3.5 font-display text-2xl font-extrabold transition-colors hover:bg-white/5",
+                        pathname === item.href ? "text-gradient-brand" : "text-white",
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                    {item.children && (
+                      <ul className="mb-2 ml-4 border-l border-white/10 pl-2">
+                        {item.children.map((child) => (
+                          <li key={child.href}>
+                            <Link
+                              href={child.href}
+                              className={cn(
+                                "block rounded-lg px-4 py-2.5 text-base transition-colors hover:bg-white/5",
+                                pathname === child.href ? "text-brand-pink" : "text-ink-200",
+                              )}
+                            >
+                              {child.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </nav>
 
-        <div className="space-y-3 border-t border-white/10 bg-ink-900/60 px-5 py-5">
-          <Button href="/kontakt" size="lg" className="w-full">
-            Offerte anfragen
-          </Button>
-          <div className="grid grid-cols-2 gap-3">
-            <a href={telHref} className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-white/20 text-sm font-semibold">
-              <PhoneIcon size={18} className="text-ember-300" />
-              {company.contact.phoneDisplay}
-            </a>
-            <a href={mailHref} className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-white/20 text-sm font-semibold">
-              <MailIcon size={18} className="text-ember-300" />
-              E-Mail
-            </a>
-          </div>
-        </div>
-      </div>,
+            <div className="space-y-3 border-t border-white/10 bg-black/30 px-5 py-5">
+              <Button href="/kontakt#offerte" size="lg" className="w-full">
+                Kostenlose Offerte
+                <ArrowRightIcon size={18} />
+              </Button>
+              <div className="grid grid-cols-2 gap-3">
+                <a href={telHref} className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-white/25 text-sm font-semibold">
+                  <PhoneIcon size={18} className="text-brand-pink" />
+                  {company.contact.phoneDisplay}
+                </a>
+                <a href={mailHref} className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-white/25 text-sm font-semibold">
+                  <MailIcon size={18} className="text-brand-pink" />
+                  E-Mail
+                </a>
+              </div>
+            </div>
+          </div>,
           document.body,
         )}
     </div>

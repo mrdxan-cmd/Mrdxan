@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/home/Hero";
 import { ServicesSection } from "@/components/home/ServicesSection";
-import { TrustSection } from "@/components/home/TrustSection";
-import { ProcessSection } from "@/components/home/ProcessSection";
 import { ProjectsSection } from "@/components/home/ProjectsSection";
 import { ReviewsSection } from "@/components/home/ReviewsSection";
 import { ServiceAreasSection } from "@/components/home/ServiceAreasSection";
 import { FaqSection } from "@/components/home/FaqSection";
-import { CtaBanner } from "@/components/home/CtaBanner";
+import { ContactSection } from "@/components/home/ContactSection";
 import { pageMetadata } from "@/lib/seo";
 import { site } from "@/content/site";
 
@@ -25,13 +23,11 @@ export default function HomePage() {
     <>
       <Hero />
       <ServicesSection />
-      <TrustSection />
-      <ProcessSection />
       <ProjectsSection />
       <ReviewsSection />
       <ServiceAreasSection />
       <FaqSection />
-      <CtaBanner />
+      <ContactSection />
     </>
   );
 }

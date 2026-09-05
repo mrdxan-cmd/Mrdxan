@@ -1,8 +1,11 @@
 import localFont from "next/font/local";
 
 /**
- * Self-hosted variable fonts (SIL Open Font License, see src/fonts/LICENSE-*.txt).
- * No runtime requests to Google Fonts — fully portable across hosting providers.
+ * Self-hosted fonts (SIL Open Font License, see src/fonts/LICENSE-*.txt).
+ * No runtime requests to Google Fonts – fully portable across hosting providers.
+ *
+ * Inter  – headings and body (matches the mockup's bold geometric headline style)
+ * Caveat – handwritten accents ("Schönere Räume. Stärkere Region.")
  */
 export const inter = localFont({
   src: [
@@ -14,12 +17,9 @@ export const inter = localFont({
   preload: true,
 });
 
-export const outfit = localFont({
-  src: [
-    { path: "../fonts/outfit-latin-wght-normal.woff2", weight: "100 900", style: "normal" },
-    { path: "../fonts/outfit-latin-ext-wght-normal.woff2", weight: "100 900", style: "normal" },
-  ],
-  variable: "--font-outfit",
+export const caveat = localFont({
+  src: [{ path: "../fonts/caveat-latin-700-normal.woff2", weight: "700", style: "normal" }],
+  variable: "--font-caveat",
   display: "swap",
-  preload: true,
+  preload: false,
 });

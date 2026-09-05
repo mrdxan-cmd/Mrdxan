@@ -10,7 +10,9 @@
 export const site = {
   name: "Maler Phönix",
   shortName: "Phönix",
-  tagline: "Maler- und Gipserarbeiten im Glarnerland",
+  tagline: "Farbe schafft Lebensräume",
+  /** Secondary claim used in hero/footer (from the design mockup). */
+  claim: "Aus Glarus. Für schöne Lebensräume.",
   /** Canonical production URL (future). */
   productionUrl: "https://www.maler-gl.ch",
   locale: "de-CH",
@@ -23,7 +25,7 @@ export const site = {
   defaultTitle: "Maler Phönix – Malerarbeiten, Gipserarbeiten & Fassaden in Näfels GL",
   /** Default social sharing image (generated static asset). */
   ogImage: "/images/brand/og-default.png",
-  themeColor: "#0d0c0a",
+  themeColor: "#07070f",
 } as const;
 
 /**

@@ -23,7 +23,7 @@ export default function DatenschutzPage() {
       paragraphs: [
         <>
           Verantwortlich für die Datenbearbeitung auf dieser Website ist die {company.legalName}, {fullAddress}, E-Mail:{" "}
-          <a href={mailHref} className="font-semibold text-ember-600">
+          <a href={mailHref} className="font-semibold text-brand-magenta">
             {company.contact.email}
           </a>
           .
@@ -74,7 +74,7 @@ export default function DatenschutzPage() {
         <>
           Sie haben das Recht auf Auskunft über die zu Ihrer Person bearbeiteten Daten, auf Berichtigung, Löschung oder Einschränkung der
           Bearbeitung sowie auf Datenherausgabe. Wenden Sie sich dafür an{" "}
-          <a href={mailHref} className="font-semibold text-ember-600">
+          <a href={mailHref} className="font-semibold text-brand-magenta">
             {company.contact.email}
           </a>
           . Zudem haben Sie das Recht, sich beim Eidgenössischen Datenschutz- und Öffentlichkeitsbeauftragten (EDÖB) zu beschweren.

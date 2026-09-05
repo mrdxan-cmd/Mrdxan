@@ -48,7 +48,7 @@ export default async function ProjektPage({ params }: PageProps<"/projekte/[slug
         title={project.title}
         text={
           <span className="inline-flex items-center gap-2">
-            <PinIcon size={18} className="text-ember-300" />
+            <PinIcon size={18} className="text-brand-pink" />
             {project.location}
             {project.year && ` · ${project.year}`}
           </span>
@@ -96,7 +96,7 @@ export default async function ProjektPage({ params }: PageProps<"/projekte/[slug
                 <ul className="mt-4 space-y-2.5">
                   {project.scope.map((s) => (
                     <li key={s} className="flex items-start gap-2.5 text-[15px] text-ink-700">
-                      <CheckIcon size={18} strokeWidth={2.4} className="mt-0.5 shrink-0 text-ember-500" />
+                      <CheckIcon size={18} strokeWidth={2.4} className="mt-0.5 shrink-0 text-brand-magenta" />
                       {s}
                     </li>
                   ))}
@@ -107,7 +107,7 @@ export default async function ProjektPage({ params }: PageProps<"/projekte/[slug
                 <ul className="mt-4 flex flex-wrap gap-2">
                   {project.services.map((s) => (
                     <li key={s}>
-                      <Link href={`/leistungen/${s}`} className="inline-flex rounded-full bg-ember-50 px-3 py-1.5 text-sm font-semibold text-ember-700 hover:bg-ember-100">
+                      <Link href={`/leistungen/${s}`} className="inline-flex rounded-full bg-ink-50 px-3 py-1.5 text-sm font-semibold text-brand-violet hover:bg-ink-100">
                         {serviceMap[s].label}
                       </Link>
                     </li>

@@ -6,7 +6,9 @@ export interface NavItem {
   children?: { label: string; href: string; description?: string }[];
 }
 
+/** Main navigation – order follows the mockup (Startseite · Leistungen · Projekte · Über uns · Kontakt). */
 export const mainNavigation: NavItem[] = [
+  { label: "Startseite", href: "/" },
   {
     label: "Leistungen",
     href: "/leistungen",
@@ -18,18 +20,19 @@ export const mainNavigation: NavItem[] = [
   },
   { label: "Projekte", href: "/projekte" },
   { label: "Über uns", href: "/ueber-uns" },
-  { label: "FAQ", href: "/faq" },
   { label: "Kontakt", href: "/kontakt" },
 ];
 
 export const footerNavigation = {
-  leistungen: services.map((s) => ({ label: s.label, href: `/leistungen/${s.slug}` })),
-  unternehmen: [
-    { label: "Über uns", href: "/ueber-uns" },
+  seiten: [
+    { label: "Startseite", href: "/" },
+    { label: "Leistungen", href: "/leistungen" },
     { label: "Projekte", href: "/projekte" },
+    { label: "Über uns", href: "/ueber-uns" },
     { label: "FAQ", href: "/faq" },
-    { label: "Kontakt & Offerte", href: "/kontakt" },
+    { label: "Kontakt", href: "/kontakt" },
   ],
+  leistungen: services.map((s) => ({ label: s.label, href: `/leistungen/${s.slug}` })),
   rechtliches: [
     { label: "Impressum", href: "/impressum" },
     { label: "Datenschutz", href: "/datenschutz" },

@@ -39,21 +39,32 @@ export const company = {
     longitude: 9.0633,
   },
   contact: {
-    /** Display format (Swiss). VERIFY */
+    /**
+     * Display format (Swiss). VERIFY – CONFLICT:
+     *   - "079 223 25 13" = employer phone of Phönix FO GmbH in the owner's own documents (used here)
+     *   - "055 610 27 44" appears in the design mockup (mockup content is unverified filler)
+     * Resolve against the live website / Impressum before go-live.
+     */
     phoneDisplay: "079 223 25 13",
-    /** E.164 for tel: links and schema.org. VERIFY */
+    /** E.164 for tel: links and schema.org. VERIFY (see conflict above) */
     phoneE164: "+41792232513",
     /** VERIFY – placeholder pattern based on the domain. */
     email: "info@maler-gl.ch",
     /** Optional WhatsApp number (E.164 without +). Set to null to hide the WhatsApp button. VERIFY */
     whatsapp: "41792232513" as string | null,
   },
-  /** Opening hours – VERIFY. Used for display and schema.org OpeningHoursSpecification. */
+  /**
+   * Opening hours – VERIFY. The design mockup shows "Mo–Fr 07:00 – 17:00"; adopted as the
+   * single documented source. Used for display and schema.org OpeningHoursSpecification.
+   */
   openingHours: [
-    { days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], label: "Montag – Freitag", opens: "07:00", closes: "12:00" },
-    { days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], label: "Montag – Freitag", opens: "13:00", closes: "17:30" },
+    { days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], label: "Montag – Freitag", opens: "07:00", closes: "17:00" },
   ],
+  /** Short hours label for compact UI (contact section, footer). */
+  openingHoursShort: "Mo – Fr 07:00 – 17:00",
   openingHoursNote: "Termine ausserhalb der Bürozeiten nach Vereinbarung.",
+  /** Region label used in the contact section (mockup: "Glarus & Umgebung"). */
+  regionLabel: "Glarus & Umgebung",
   /** Short "about" text used on the homepage and the Über uns page. */
   shortDescription:
     "Maler Phönix ist Ihr Malergeschäft in Näfels. Wir übernehmen Malerarbeiten, Gipserarbeiten und Fassadenrenovationen für private und gewerbliche Kundschaft im Kanton Glarus und der umliegenden Region – sauber, termintreu und mit Blick fürs Detail.",

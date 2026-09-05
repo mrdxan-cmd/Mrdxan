@@ -52,7 +52,7 @@ export default function KontaktPage() {
             </ul>
             <div className="rounded-2xl border border-ink-100 bg-white p-5">
               <p className="inline-flex items-center gap-2 font-display font-bold text-ink-900">
-                <ClockIcon size={20} className="text-ember-500" />
+                <ClockIcon size={20} className="text-brand-magenta" />
                 Öffnungszeiten
               </p>
               <ul className="mt-3 space-y-1 text-[15px] text-ink-700">
@@ -97,7 +97,7 @@ export default function KontaktPage() {
           </div>
           <p className="mt-3 text-xs text-ink-500">
             Die Karte wird von Google Maps geladen. Es gelten die Datenschutzbestimmungen von Google.{" "}
-            <a href={mapsHref} target="_blank" rel="noopener noreferrer" className="font-semibold text-ember-600 underline-offset-4 hover:underline">
+            <a href={mapsHref} target="_blank" rel="noopener noreferrer" className="font-semibold text-brand-magenta underline-offset-4 hover:underline">
               In Google Maps öffnen
             </a>
           </p>
@@ -115,7 +115,7 @@ function ContactItem({ href, icon, label, value, external }: { href: string; ico
         {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
         className="group flex items-start gap-4 rounded-2xl border border-ink-100 bg-white p-5 transition-all hover:-translate-y-0.5 hover:shadow-card"
       >
-        <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-ember-50 text-ember-600 group-hover:bg-ember-500 group-hover:text-white">
+        <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-ink-50 text-brand-magenta group-hover:bg-ink-500 group-hover:text-white">
           {icon}
         </span>
         <span>

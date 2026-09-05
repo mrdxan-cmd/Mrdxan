@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { inter, outfit } from "@/lib/fonts";
+import { caveat, inter } from "@/lib/fonts";
 import { getSiteUrl, site } from "@/content/site";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -44,11 +44,11 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang={site.language} className={`${inter.variable} ${outfit.variable} h-full antialiased`}>
+    <html lang={site.language} className={`${inter.variable} ${caveat.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ember-500 focus:px-4 focus:py-2 focus:text-white"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-brand-magenta focus:px-4 focus:py-2 focus:text-white"
         >
           Zum Inhalt springen
         </a>

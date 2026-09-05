@@ -43,6 +43,30 @@ export const trustItems: TrustItem[] = [
   },
 ];
 
+/**
+ * Hero highlights (mockup: "5 Jahre Garantie", "12+ Jahre Erfahrung", "Schnelle Rückmeldung").
+ * Claims that are facts about the business (guarantee, years) are NOT shown until the owner
+ * confirms them – set `verified: true` after checking. Unverified items are never rendered.
+ */
+export type HighlightIcon = "shield" | "users" | "bolt" | "check" | "sparkles";
+export interface Highlight {
+  icon: HighlightIcon;
+  label: string;
+  verified: boolean;
+}
+export const heroHighlights: Highlight[] = [
+  { icon: "shield", label: "5 Jahre Garantie", verified: false }, // VERIFY – from mockup
+  { icon: "users", label: "12+ Jahre Erfahrung", verified: false }, // VERIFY – from mockup
+  { icon: "bolt", label: "Schnelle Rückmeldung", verified: true },
+  { icon: "check", label: "Kostenlose Offerte", verified: true },
+  { icon: "sparkles", label: "Sauber & termintreu", verified: true },
+];
+export const visibleHighlights = heroHighlights.filter((h) => h.verified).slice(0, 3);
+
+/** Footer claim (mockup: "Qualität. Farbe. Vertrauen. Seit über 12 Jahren.") – years part hidden until verified. */
+export const footerClaim = "Qualität. Farbe. Vertrauen.";
+export const footerClaimSuffix: string | null = null; // e.g. "Seit über 12 Jahren." once verified
+
 /** Key figures – set `value` to null to hide a stat until the real number is confirmed. VERIFY */
 export interface Stat {
   value: string | null;

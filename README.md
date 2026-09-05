@@ -8,7 +8,8 @@ Neue, eigenständige Website für **Maler Phönix / Phönix FO GmbH, Näfels GL*
 
 - [Next.js 16](https://nextjs.org) (App Router, statisch vorgerendert) · React 19 · TypeScript (strict)
 - Tailwind CSS 4 mit eigenem Design-Token-Set (`src/app/globals.css`)
-- Self-hosted Fonts (Inter, Outfit – OFL), keine externen Requests zu Google Fonts
+- Self-hosted Fonts (Inter, Caveat – OFL), keine externen Requests zu Google Fonts
+- Design gemäss Homepage-Mockup (dunkler Hero, Phönix-Artwork, Magenta→Violett→Blau-Verlauf), siehe `docs/DESIGN.md`
 - Offertformular als Server Action mit Zod-Validierung, Honeypot und Rate-Limit; E-Mail-Versand via Resend oder Webhook (portabel, kein Vendor-Lock-in)
 - SEO: Metadata API, Canonicals, Open Graph, `sitemap.xml`, `robots.txt`, JSON-LD (LocalBusiness, Service, FAQPage, BreadcrumbList), 308-Redirects für alte URLs
 - QA-Suite mit Playwright (Screenshots 360–1440 px, Route-/Link-/Schema-Checks, Formular-Test)
@@ -32,8 +33,8 @@ Weitere Befehle:
 | `npm run qa`               | Build + Server + komplette QA-Suite (Screenshots, Routen, Formular)   |
 | `npm run crawl:live`       | Bestehende Website read-only crawlen (URLs, SEO-Texte, Bilder)        |
 | `npm run check:redirects`  | Alle alten URLs gegen die neue Site prüfen (200 oder 308 → 200)       |
-| `node scripts/generate-assets.mjs`  | OG-Bild und Icons aus dem SVG-Artwork erzeugen               |
-| `node scripts/generate-phoenix.mjs` | Phönix-Artwork (SVG) neu generieren                          |
+| `node scripts/generate-assets.mjs`  | OG-Bild und Icons aus dem Phönix-Artwork erzeugen               |
+| `node scripts/prepare-phoenix.mjs <jpg>` | Phönix-Artwork freistellen (Alpha) → phoenix.png / phoenix-logo.png |
 
 ## Projektstruktur
 
@@ -41,7 +42,7 @@ Weitere Befehle:
 src/
   app/                 Routen (App Router): /, /leistungen, /leistungen/[slug], /projekte,
                        /projekte/[slug], /ueber-uns, /kontakt, /faq, /impressum, /datenschutz
-                       + sitemap.ts, robots.ts, manifest.ts, icon.svg, apple-icon.png, not-found.tsx
+                       + sitemap.ts, robots.ts, manifest.ts, icon.png, apple-icon.png, not-found.tsx
   content/             ZENTRALE INHALTE – hier werden Texte und Firmendaten gepflegt
     site.ts            Site-Name, Domain, Standard-Metadaten
     company.ts         Firma, Adresse, Telefon, E-Mail, UID, Öffnungszeiten
@@ -57,7 +58,7 @@ src/
   components/          UI-Komponenten (layout, home, services, projects, forms, faq, ui, seo)
   lib/                 seo.ts (Metadata-Helper), schema.ts (JSON-LD), mail.ts (Versand), fonts.ts
 public/images/
-  brand/               Logo, Phönix-Artwork, OG-Bild
+  brand/               Phönix-Artwork (freigestellt), Logo, OG-Bild, Icons
   services/ projects/ general/   Platz für die echten Fotos der bestehenden Website
 scripts/               QA- und Migrationswerkzeuge (siehe docs/MIGRATION.md)
 docs/                  MIGRATION.md, CONTENT-VERIFICATION.md, QA-REPORT.md
@@ -81,4 +82,4 @@ Die Anwendung ist reines Next.js ohne Vercel-spezifische APIs und lässt sich eb
 
 ## Lizenzhinweise
 
-Inter und Outfit werden unter der SIL Open Font License eingebunden (`src/fonts/LICENSE-*.txt`).
+Inter und Caveat werden unter der SIL Open Font License eingebunden (`src/fonts/LICENSE-*.txt`).

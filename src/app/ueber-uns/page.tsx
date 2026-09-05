@@ -46,12 +46,12 @@ export default function UeberUnsPage() {
       <Section tone="paper">
         <div className="container-x grid items-center gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
           <div className="relative mx-auto w-full max-w-md">
-            <div aria-hidden="true" className="absolute inset-[15%] rounded-full bg-ember-500/20 blur-3xl" />
+            <div aria-hidden="true" className="absolute inset-[15%] rounded-full bg-ink-500/20 blur-3xl" />
             <div className="surface-dark relative overflow-hidden rounded-3xl p-8">
-              <Image src="/images/brand/phoenix.svg" alt="Phönix – Symbol für Erneuerung" width={800} height={800} className="mx-auto w-4/5" />
+              <Image src="/images/brand/phoenix.png" alt="Phönix – Symbol für Erneuerung" width={1427} height={996} className="mx-auto w-4/5" />
               <p className="mt-2 text-center font-display text-lg font-bold text-white">
                 {company.brand}
-                <span className="block text-xs font-semibold uppercase tracking-[0.2em] text-ember-300">{company.legalName}</span>
+                <span className="block text-xs font-semibold uppercase tracking-[0.2em] text-brand-pink">{company.legalName}</span>
               </p>
             </div>
           </div>
@@ -101,7 +101,7 @@ export default function UeberUnsPage() {
           <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {trustItems.map((item) => (
               <li key={item.title} className="flex gap-4 rounded-2xl border border-ink-100 bg-paper p-5">
-                <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-ember-50 text-ember-600">
+                <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-ink-50 text-brand-magenta">
                   <TrustGlyph icon={item.icon} size={20} />
                 </span>
                 <div>

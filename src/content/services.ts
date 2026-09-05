@@ -49,7 +49,7 @@ export const services: Service[] = [
     seoTitle: "Fassadenrenovation & Fassadenanstrich in Näfels GL",
     description:
       "Fassadensanierung, Fassadenanstrich und Fassadenreinigung im Kanton Glarus. Maler Phönix schützt und verschönert Ihre Fassade – jetzt Offerte anfragen.",
-    teaser: "Schutz und Ausstrahlung für Ihr Gebäude – von der Reinigung bis zum Neuanstrich.",
+    teaser: "Schutz und Schönheit für Ihr Zuhause. Wetterbeständige Anstriche und professionelle Fassadenrenovation.",
     intro: [
       "Die Fassade ist die Visitenkarte Ihres Hauses und gleichzeitig sein Wetterschutz. Sonne, Regen und Frost setzen ihr jedes Jahr zu. Eine fachgerechte Fassadenrenovation erhält die Bausubstanz und wertet Ihre Liegenschaft sichtbar auf.",
       "Wir prüfen den Untergrund, beheben Risse und Schäden im Putz und tragen ein auf Ihr Gebäude abgestimmtes Anstrichsystem auf – langlebig, farbecht und passend zum Charakter Ihres Hauses.",
@@ -90,7 +90,7 @@ export const services: Service[] = [
     seoTitle: "Malerarbeiten innen & aussen – Maler in Näfels GL",
     description:
       "Malerarbeiten für Wohnungen, Häuser und Gewerbe im Kanton Glarus: Wände, Decken, Türen, Fenster und Holz. Sauber, termintreu, fair. Offerte anfragen.",
-    teaser: "Wände, Decken, Türen und Holz – präzise Anstriche für ein neues Wohngefühl.",
+    teaser: "Frische Farben für ein neues Wohngefühl. Saubere Arbeit, hochwertige Materialien und perfekte Oberflächen.",
     intro: [
       "Ein frischer Anstrich verändert einen Raum sofort. Ob einzelne Zimmer, die ganze Wohnung oder das Bürogebäude: Wir bereiten die Untergründe sorgfältig vor, arbeiten sauber und streichen mit hochwertigen, emissionsarmen Farben.",
       "Wir beraten Sie bei der Farbwahl, schützen Ihre Einrichtung zuverlässig und hinterlassen die Räume besenrein – damit Sie sich sofort wieder wohlfühlen.",
@@ -131,7 +131,7 @@ export const services: Service[] = [
     seoTitle: "Gipserarbeiten, Verputz & Trockenbau in Näfels GL",
     description:
       "Gipserarbeiten im Kanton Glarus: Innenputz, Aussenputz, Spachtelarbeiten, Trockenbau und Sanierung von Rissen. Maler Phönix – Offerte anfragen.",
-    teaser: "Glatte Wände, saubere Kanten – Innen- und Aussenputz vom Fachbetrieb.",
+    teaser: "Glatte Wände und saubere Kanten. Innen- und Aussenputz, Spachtelarbeiten und Trockenbau vom Fachbetrieb.",
     intro: [
       "Ein perfekter Anstrich beginnt beim Untergrund. Unsere Gipserarbeiten schaffen ebene, tragfähige Flächen – vom Grundputz über Abrieb bis zur glatt gespachtelten Wand in Qualitätsstufe Q3.",
       "Wir sanieren beschädigte Putze, schliessen Risse dauerhaft und erstellen Trockenbauwände und Decken – alles aus einer Hand, abgestimmt mit den nachfolgenden Malerarbeiten.",
@@ -167,7 +167,7 @@ export const services: Service[] = [
     seoTitle: "Maler- und Gipserarbeiten für Neubau & Renovation in Glarus",
     description:
       "Komplette Maler- und Gipserarbeiten für Neubauten und Renovationen im Kanton Glarus. Ein Ansprechpartner, klare Termine, saubere Ausführung. Offerte anfragen.",
-    teaser: "Vom Rohbau bis zur Übergabe – oder frischer Wind für Ihre bestehende Liegenschaft.",
+    teaser: "Gipserarbeiten, Verputz und Gesamtlösungen für Neubau und Renovation – alles aus einer Hand.",
     intro: [
       "Beim Neubau zählen Termintreue und Koordination: Wir arbeiten eng mit Architektinnen, Bauleitern und anderen Handwerkern zusammen und liefern Gipser- und Malerarbeiten in vereinbarter Qualität – pünktlich zur Übergabe.",
       "Bei Renovationen holen wir das Beste aus bestehenden Räumen heraus: Wir sanieren Untergründe, modernisieren Oberflächen und begleiten Sie von der ersten Idee bis zur fertigen Wohnung.",
