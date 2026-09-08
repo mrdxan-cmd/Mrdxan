@@ -35,6 +35,7 @@ Weitere Befehle:
 | `npm run check:redirects`  | Alle alten URLs gegen die neue Site prüfen (200 oder 308 → 200)       |
 | `node scripts/generate-assets.mjs`  | OG-Bild und Icons aus dem Phönix-Artwork erzeugen               |
 | `node scripts/prepare-phoenix.mjs <jpg>` | Phönix-Artwork freistellen (Alpha) → phoenix.png / phoenix-logo.png |
+| `node scripts/qa/pdf-preview.mjs`   | Alle Seiten als Screenshots in **einem PDF** (Desktop + Mobile) → `docs/preview/` |
 
 ## Projektstruktur
 
@@ -61,7 +62,8 @@ public/images/
   brand/               Phönix-Artwork (freigestellt), Logo, OG-Bild, Icons
   services/ projects/ general/   Platz für die echten Fotos der bestehenden Website
 scripts/               QA- und Migrationswerkzeuge (siehe docs/MIGRATION.md)
-docs/                  MIGRATION.md, CONTENT-VERIFICATION.md, QA-REPORT.md
+docs/                  MIGRATION.md, CONTENT-VERIFICATION.md, DESIGN.md, QA-REPORT.md
+  preview/             Maler-Phoenix-Website-Vorschau.pdf (Screenshots aller Seiten)
 ```
 
 ## Inhalte pflegen

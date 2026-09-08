@@ -42,3 +42,6 @@ next-env.d.ts
 
 # QA output
 /scripts/output
+
+# Zwischenablage der PDF-Erzeugung
+/scripts/output/pdf-slices
