@@ -9,7 +9,7 @@
  * Usage:  QA_BASE_URL=http://localhost:3000 node scripts/qa/pdf-preview.mjs
  * Output: docs/preview/Maler-Phoenix-Website-Vorschau.pdf
  */
-import { mkdir, rm, writeFile } from "node:fs/promises";
+import { mkdir, rm, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 import { launch } from "./browser.mjs";
@@ -39,11 +39,14 @@ const pages = [
   { route: "/diese-seite-gibt-es-nicht", title: "404 – Seite nicht gefunden", note: "Fehlerseite" },
 ];
 
-const DESKTOP = { width: 1440, height: 900, sliceHeight: 988 };
-const MOBILE = { width: 390, height: 844, sliceHeight: 842 };
+const DESKTOP = { width: 1440, height: 900, sliceHeight: 988, renderWidth: 1100 };
+const MOBILE = { width: 390, height: 844, sliceHeight: 842, renderWidth: 390 };
 
-/** Cuts a tall screenshot into page-sized JPEG slices. */
-async function slice(buffer, sliceHeight, prefix) {
+/** JPEG quality – lower keeps the PDF small enough to download and open everywhere. */
+const QUALITY = Number(process.env.PDF_QUALITY ?? 68);
+
+/** Cuts a tall screenshot into page-sized JPEG slices (downscaled + mozjpeg to keep the PDF light). */
+async function slice(buffer, sliceHeight, prefix, renderWidth) {
   const meta = await sharp(buffer).metadata();
   const total = meta.height ?? 0;
   const count = Math.max(1, Math.ceil(total / sliceHeight));
@@ -53,11 +56,9 @@ async function slice(buffer, sliceHeight, prefix) {
     const height = Math.min(sliceHeight, total - top);
     if (height <= 4) break;
     const file = path.join(tmpDir, `${prefix}-${String(i).padStart(2, "0")}.jpg`);
-    await sharp(buffer)
-      .extract({ left: 0, top, width: meta.width, height })
-      .flatten({ background: "#ffffff" })
-      .jpeg({ quality: 78, progressive: true })
-      .toFile(file);
+    let pipeline = sharp(buffer).extract({ left: 0, top, width: meta.width, height }).flatten({ background: "#ffffff" });
+    if (renderWidth && renderWidth < meta.width) pipeline = pipeline.resize({ width: renderWidth });
+    await pipeline.jpeg({ quality: QUALITY, mozjpeg: true, progressive: true }).toFile(file);
     files.push({ file, height, width: meta.width, index: i, count });
   }
   return files;
@@ -88,7 +89,7 @@ try {
       await page.waitForTimeout(250);
       const buffer = await page.screenshot({ type: "png", fullPage: true });
       const prefix = `${key}-${spec.route === "/" ? "home" : spec.route.slice(1).replace(/\//g, "_")}`;
-      shot[key] = await slice(buffer, vp.sliceHeight, prefix);
+      shot[key] = await slice(buffer, vp.sliceHeight, prefix, vp.renderWidth);
       shot[`${key}Status`] = res?.status();
       await context.close();
     }
@@ -214,11 +215,13 @@ try {
 
   const page = await browser.newPage();
   await page.goto(`file://${htmlFile}`, { waitUntil: "load" });
+  await page.evaluate(() => Promise.all(Array.from(document.images).filter((i) => !i.complete).map((i) => new Promise((r) => { i.onload = i.onerror = r; }))));
   await page.emulateMedia({ media: "print" });
   const pdfPath = path.join(outDir, "Maler-Phoenix-Website-Vorschau.pdf");
   await page.pdf({ path: pdfPath, format: "A4", landscape: true, printBackground: true, margin: { top: 0, right: 0, bottom: 0, left: 0 } });
   await page.close();
-  console.log(`\n✓ ${pdfPath}`);
+  const { size } = await stat(pdfPath);
+  console.log(`\n✓ ${pdfPath} (${(size / 1048576).toFixed(1)} MB)`);
 } finally {
   await browser.close();
 }
